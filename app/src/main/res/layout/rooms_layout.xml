@@ -76,4 +76,9 @@
             android:orientation="vertical" />
 
     </ScrollView>
+    <include layout="@layout/footer_layout"
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

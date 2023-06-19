@@ -15,37 +15,37 @@ import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RoomTypeActivity extends AppCompatActivity {
 
     private String selectedID="-1";
+
     private String selectedType="Not Selected";
-    private Boolean isRowSelected = false;
+    public String getSelectedType() {
+        return selectedType;
+    }
+
+    public void setSelectedType(String selectedType) {
+        this.selectedType = selectedType;
+    }
+
 
     public String getSelectedID() {
         return selectedID;
     }
 
-    public Boolean getRowSelected() {
-        return isRowSelected;
-    }
 
     public void setSelectedID(String selectedID) {
         this.selectedID = selectedID;
     }
 
-    public void setRowSelected(Boolean rowSelected) {
-        isRowSelected = rowSelected;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_type_layout);
-
-
-
 
         //logout
         Button logoutB = findViewById(R.id.logoutBtn);
@@ -57,6 +57,7 @@ public class RoomTypeActivity extends AppCompatActivity {
                 finish();            }
         });
 
+        // add
         Button addB = findViewById(R.id.addBtn);
         addB.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -65,19 +66,31 @@ public class RoomTypeActivity extends AppCompatActivity {
                                     }
                                 });
 
+        //edit
         Button editB = findViewById(R.id.editBtn);
         editB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crud(v,"EDIT");
+                if (selectedID == "-1") {
+                    Toast.makeText(getApplicationContext(), "No row selected.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else{
+                crud(v,"EDIT");}
             }
         });
 
+        // delete
         Button deleteB = findViewById(R.id.deleteBtn);
         deleteB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crud(v,"DELETE");
+                if (selectedID == "-1") {
+                    Toast.makeText(getApplicationContext(), "No row selected.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else{
+                crud(v,"DELETE");}
             }
         });
 
@@ -159,7 +172,7 @@ public class RoomTypeActivity extends AppCompatActivity {
         TextView idLabel = popupView.findViewById(R.id.roomTypeIDLabel);
         TextView id = popupView.findViewById(R.id.roomTypeID);
         TextView roomType = popupView.findViewById(R.id.roomType);
-        Button addButton = popupView.findViewById(R.id.addBtn);
+        Button addButton = popupView.findViewById(R.id.actionBtn);
         addButton.setText(type);
         if(type == "ADD") {
             idLabel.setVisibility(GONE);

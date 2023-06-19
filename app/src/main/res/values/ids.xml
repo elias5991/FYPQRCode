@@ -31,4 +31,9 @@
     <item name="roomsTable" type="id" />
     <item name="roomTypeID" type="id" />
     <item name="roomType" type="id" />
+    <item name="roomID" type="id" />
+    <item name="roomName" type="id" />
+    <item name="space" type="id" />
+    <item name="departmentID" type="id" />
+    <item name="department" type="id" />
 </resources>

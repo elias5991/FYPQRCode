@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/roomTypeIDLabel"
+        android:id="@+id/departmentIDLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -16,8 +16,8 @@
         tools:ignore="MissingConstraints"
         android:textStyle="bold"/>
     <TextView
-        android:id="@id/roomTypeID"
-        android:layout_toRightOf="@id/roomTypeIDLabel"
+        android:id="@id/departmentID"
+        android:layout_toRightOf="@id/departmentIDLabel"
         android:padding="5dp"
         android:text="1233"
         android:layout_marginLeft="8dp"
@@ -25,30 +25,30 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/roomTypeLabel"
-        android:layout_below="@id/roomTypeID"
+        android:id="@+id/departmentLabel"
+        android:layout_below="@id/departmentID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:layout_marginLeft="8dp"
-        android:text="Room Type:"
+        android:text="Department:"
         tools:ignore="MissingConstraints"
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@id/roomType"
+        android:id="@id/department"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:layout_marginLeft="8dp"
-        android:layout_below="@id/roomTypeID"
-        android:layout_alignTop="@id/roomTypeLabel"
-        android:layout_alignBottom="@id/roomTypeLabel"
-        android:layout_toRightOf="@id/roomTypeLabel"
+        android:layout_below="@id/departmentID"
+        android:layout_alignTop="@id/departmentLabel"
+        android:layout_alignBottom="@id/departmentLabel"
+        android:layout_toRightOf="@id/departmentLabel"
         android:hint="Write Room Type Here"/>
 
     <Button
-        android:layout_below="@id/roomTypeLabel"
+        android:layout_below="@id/departmentLabel"
         android:id="@+id/actionBtn"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -59,7 +59,7 @@
 
     <Button
         android:id="@+id/backBtn"
-        android:layout_below="@id/roomTypeLabel"
+        android:layout_below="@id/departmentLabel"
         android:layout_width="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_height="wrap_content"

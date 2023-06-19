@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C8C8C8"
+    >
+
+    <TextView
+        android:id="@+id/roomIDLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="ID:"
+        android:layout_marginLeft="8dp"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@id/roomID"
+        android:layout_toRightOf="@id/roomIDLabel"
+        android:padding="5dp"
+        android:text="1233"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/roomNameLabel"
+        android:layout_below="@id/roomID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Room Name:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/roomName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/roomID"
+        android:layout_alignTop="@id/roomNameLabel"
+        android:layout_alignBottom="@id/roomNameLabel"
+        android:layout_toRightOf="@id/roomNameLabel"
+        android:hint="Write Room Name Here"/>
+
+    <TextView
+        android:id="@+id/roomTypeLabel"
+        android:layout_below="@id/roomNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Room Type:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:layout_below="@id/roomTypeLabel"
+        android:layout_toRightOf="@id/roomTypeLabel"
+        android:id="@+id/roomTypeSpinner"
+        android:layout_alignTop="@id/roomTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/spaceLabel"
+        android:layout_below="@id/roomTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Space:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/roomTypeLabel"
+        android:layout_alignTop="@id/spaceLabel"
+        android:layout_alignBottom="@id/spaceLabel"
+        android:layout_toRightOf="@id/spaceLabel"
+        android:hint="Write Room Space Here in sqm"/>
+
+    <TextView
+        android:id="@+id/departmentLabel"
+        android:layout_below="@id/spaceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Department:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:layout_below="@id/spaceLabel"
+        android:layout_toRightOf="@id/departmentLabel"
+        android:id="@+id/departmentSpinner"
+        android:layout_alignTop="@id/departmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/facultyLabel"
+        android:layout_below="@id/departmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Faculty:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:layout_below="@id/departmentLabel"
+        android:layout_toRightOf="@id/facultyLabel"
+        android:id="@+id/facultySpinner"
+        android:layout_alignTop="@id/facultyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:layout_below="@id/facultyLabel"
+        android:id="@+id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action"
+        android:backgroundTint="#3162a4"/>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_below="@id/facultyLabel"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_toRightOf="@id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:backgroundTint="#3162a4"/>
+</RelativeLayout>
