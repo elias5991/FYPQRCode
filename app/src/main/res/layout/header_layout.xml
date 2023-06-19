@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_alignParentTop="true"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:id="@+id/headerUpperLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#3162a4">
+    <TextView
+        android:id="@+id/nameUni"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="15dp"
+        android:text="Lebanese University Faculty Of Science"
+        android:textColor="#ffffff"
+        android:textSize="25dp" />
+
+    <ImageView
+        android:id="@id/logoUni"
+        android:layout_width="72dp"
+        android:layout_height="61dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/logo"></ImageView>
+</RelativeLayout>
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:backgroundTint="#808080"
+        android:layout_below="@id/headerUpperLayout"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="logoUni" type="id" />
+    <item name="firstNameLabel" type="id" />
+    <item name="firstName" type="id" />
+    <item name="lastNameLabel" type="id" />
+    <item name="lastName" type="id" />
+    <item name="phoneNumberLabel" type="id" />
+    <item name="phoneNumber" type="id" />
+    <item name="userIDLabel" type="id" />
+    <item name="userID" type="id" />
+    <item name="typeLabel" type="id" />
+    <item name="type" type="id" />
+    <item name="roleLabel" type="id" />
+    <item name="role" type="id" />
+    <item name="emailLabel" type="id" />
+    <item name="scanQRCodeBtn" type="id" />
+    <item name="usersBtn" type="id" />
+    <item name="roomsBtn" type="id" />
+    <item name="roomTypeBtn" type="id" />
+    <item name="inventoriesBtn" type="id" />
+    <item name="invTypesBtn" type="id" />
+    <item name="facultiesBtn" type="id" />
+    <item name="departmentsBtn" type="id" />
+    <item name="roomTypeTable" type="id" />
+    <item name="roomTypeHeaderTable" type="id" />
+    <item name="userTable" type="id" />
+    <item name="departmentHeaderTable" type="id" />
+    <item name="departmentTable" type="id" />
+    <item name="roomTable" type="id" />
+    <item name="roomsTable" type="id" />
+    <item name="roomTypeID" type="id" />
+    <item name="roomType" type="id" />
+</resources>

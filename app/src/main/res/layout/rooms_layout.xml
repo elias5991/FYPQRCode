@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_layout" />
+
+
+    <TableLayout
+        android:id="@id/roomsHeaderTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/header">
+        <TableRow
+            android:id="@+id/headerRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.08"
+                android:text="Id"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.15"
+                android:layout_height="wrap_content"
+                android:text="Room Name"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content"
+                android:text="Room
+                Type"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.12"
+                android:layout_height="wrap_content"
+                android:text="Room Space"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.22"
+                android:layout_height="wrap_content"
+                android:text="Department"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.23"
+                android:layout_height="wrap_content"
+                android:text="Faculty"
+                android:textStyle="bold"/>
+        </TableRow>
+    </TableLayout>
+    <ScrollView
+        android:layout_width="411dp"
+        android:layout_height="562dp"
+        android:layout_below="@+id/roomsHeaderTable"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints">
+        <TableLayout
+            android:id="@id/roomsTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+</RelativeLayout>

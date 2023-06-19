@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/header_layout" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="562dp"
+        android:layout_below="@+id/include"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TableLayout
+            android:id="@+id/usersHeaderTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TableRow
+                android:id="@+id/headerRow">
+                <TextView
+                    android:layout_width="40sp"
+                    android:layout_height="wrap_content"
+                    android:text="ID"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:textStyle="bold"/>
+
+                <TextView
+
+                    android:layout_width="120sp"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:text="Type"
+                    android:textStyle="bold"
+                     />
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:text="Role"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_width="250sp"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                     />
+
+            </TableRow>
+        </TableLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="562dp"
+        android:layout_below="@id/usersHeaderTable"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints">
+        <TableLayout
+            android:id="@id/userTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+    </RelativeLayout>
+    </HorizontalScrollView>
+
+</RelativeLayout>
