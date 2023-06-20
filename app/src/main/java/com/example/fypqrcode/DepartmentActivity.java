@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -197,7 +198,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         // Show the popup at the center of the button
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         // Dismiss the popup when the button inside the popup is clicked
         Button closeButton = popupView.findViewById(R.id.backBtn);
         closeButton.setOnClickListener(new View.OnClickListener() {

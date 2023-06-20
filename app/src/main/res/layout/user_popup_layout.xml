@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C8C8C8"
+    >
+
+    <TextView
+        android:id="@+id/userIDLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="ID:"
+        android:layout_marginLeft="8dp"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@id/userID"
+        android:layout_toRightOf="@id/userIDLabel"
+        android:padding="5dp"
+        android:text="1233"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/firstNameLabel"
+        android:layout_below="@id/userID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="First Name:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/userID"
+        android:layout_alignTop="@id/firstNameLabel"
+        android:layout_alignBottom="@id/firstNameLabel"
+        android:layout_toRightOf="@id/firstNameLabel"
+        android:hint="Write First Name Here"/>
+
+    <TextView
+        android:id="@+id/lastNameLabel"
+        android:layout_below="@id/firstNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Last Name:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/firstNameLabel"
+        android:layout_alignTop="@id/lastNameLabel"
+        android:layout_alignBottom="@id/lastNameLabel"
+        android:layout_toRightOf="@id/lastNameLabel"
+        android:hint="Write Last Name Here"/>
+
+    <TextView
+        android:id="@+id/typeLabel"
+        android:layout_below="@id/lastNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Type:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+
+    <Spinner
+        android:layout_below="@id/lastNameLabel"
+        android:layout_toRightOf="@id/typeLabel"
+        android:id="@+id/typeSpinner"
+        android:layout_alignTop="@id/typeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/roleLabel"
+        android:layout_below="@id/typeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Role:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:layout_below="@id/typeLabel"
+        android:layout_toRightOf="@id/roleLabel"
+        android:id="@+id/roleSpinner"
+        android:layout_alignTop="@id/roleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/phoneNumberLabel"
+        android:layout_below="@id/roleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Phone Number:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/roleLabel"
+        android:layout_alignTop="@id/phoneNumberLabel"
+        android:layout_alignBottom="@id/phoneNumberLabel"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/phoneNumberLabel"
+        android:hint="Write Phone Number Here"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_below="@id/phoneNumberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Email:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/phoneNumberLabel"
+        android:layout_alignTop="@id/emailLabel"
+        android:layout_alignBottom="@id/emailLabel"
+        android:layout_toRightOf="@id/emailLabel"
+        android:hint="Write User Email Here"/>
+
+
+
+    <Button
+        android:layout_below="@id/emailLabel"
+        android:id="@+id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action"
+        android:backgroundTint="#3162a4"/>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_below="@id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_toRightOf="@id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:backgroundTint="#3162a4"/>
+</RelativeLayout>

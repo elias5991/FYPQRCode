@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -290,7 +291,7 @@ public class RoomsActivity extends AppCompatActivity {
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
             boolean focusable = true; // Allows the popup to receive focus
             final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
+            popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             // Show the popup at the center of the button
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 

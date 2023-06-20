@@ -27,12 +27,20 @@
     <activity android:name=".MainActivity"
         android:exported="false"/>
     <activity android:name=".UsersActivity"
-        android:exported="false"/>
+        android:exported="false"
+        android:windowSoftInputMode="adjustResize"
+        />
     <activity android:name=".DepartmentActivity"
-        android:exported="false"/>
+        android:exported="false"
+        android:windowSoftInputMode="adjustResize"
+        />
     <activity android:name=".RoomsActivity"
-        android:exported="false"/>
+        android:exported="false"
+        android:windowSoftInputMode="adjustResize"
+        />
     <activity android:name=".RoomTypeActivity"
-        android:exported="false"/>
+        android:exported="false"
+        android:windowSoftInputMode="adjustResize"
+        />
     </application>
 </manifest>
