@@ -35,7 +35,7 @@
         android:layout_alignStart="@id/firstNameLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/firstNameLabel"
-        android:text="Pamela"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <TextView
@@ -57,7 +57,7 @@
         android:layout_alignStart="@id/lastNameLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/lastNameLabel"
-        android:text="Nohra"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:layout_alignStart="@id/phoneNumberLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/phoneNumberLabel"
-        android:text="03259387"
+        android:text="N/A"
         android:textSize="18dp" />
 
 
@@ -102,7 +102,7 @@
         android:layout_alignStart="@id/userIDLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/userIDLabel"
-        android:text="Pamela"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <TextView
@@ -126,7 +126,7 @@
         android:layout_alignStart="@id/typeLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/typeLabel"
-        android:text="Admin"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <TextView
@@ -147,7 +147,7 @@
         android:layout_alignStart="@id/roleLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/roleLabel"
-        android:text="03259387"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <TextView
@@ -169,7 +169,7 @@
         android:layout_alignEnd="@id/phoneNumberLabel"
         android:layout_marginVertical="40dp"
         android:layout_below="@id/emailLabel"
-        android:text="pamela.nohra@emcrey.com"
+        android:text="N/A"
         android:textSize="18dp" />
 
     <Button
@@ -252,6 +252,7 @@
         android:singleLine="true"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@id/btnLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.12"

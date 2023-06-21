@@ -36,4 +36,5 @@
     <item name="space" type="id" />
     <item name="departmentID" type="id" />
     <item name="department" type="id" />
+    <item name="btnLayout2" type="id" />
 </resources>
