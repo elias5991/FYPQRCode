@@ -20,6 +20,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fypqrcode.classes.DataItem;
+import com.example.fypqrcode.htpp.DepartmentRequests;
+import com.example.fypqrcode.htpp.RoomTypeRequests;
+import com.example.fypqrcode.htpp.requests.ValueRequest;
+import com.example.fypqrcode.htpp.responses.ErrorResponse;
+import com.example.fypqrcode.htpp.responses.SuccessResponse;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class DepartmentActivity extends AppCompatActivity {
     private String selectedID="-1";
 
@@ -104,67 +120,81 @@ public class DepartmentActivity extends AppCompatActivity {
                 finish();            }
         });
 
-        TableLayout departmentT = findViewById(R.id.departmentTable);
-        populateTable(departmentT);
-        for (int i = 0; i < departmentT.getChildCount(); i++) {
-            View row = departmentT.getChildAt(i);
+        
+        populateTable();
+        
+    }
 
-            if (row instanceof TableRow) {
-                TableRow tableRow = (TableRow) row;
+    private void populateTable() {
+        TableLayout tableLayout = findViewById(R.id.departmentTable);
+        tableLayout.removeAllViews();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        DepartmentRequests departmentRequests = retrofit.create(DepartmentRequests.class);
 
-                tableRow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < departmentT.getChildCount(); i++) {
-                            View row = departmentT.getChildAt(i);
-                            if (row instanceof TableRow) {
-                                row.setBackgroundColor(Color.TRANSPARENT);
+        departmentRequests.getAllDepartments().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                if (response.isSuccessful()) {
+                    DataItem[] result = response.body();
+
+                    // Iterate through the data and create rows and cells
+                    for (int i = 0; i < result.length; i++) {
+                        TableRow tableRow = new TableRow(DepartmentActivity.this);
+                        tableRow.setLayoutParams(new TableRow.LayoutParams(
+                                TableRow.LayoutParams.MATCH_PARENT,
+                                TableRow.LayoutParams.WRAP_CONTENT));
+
+                        TextView textView = new TextView(DepartmentActivity.this);
+                        textView.setText(result[i].getId().toString());
+
+                        TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f);
+                        textView.setLayoutParams(params1);
+                        tableRow.addView(textView);
+                        TextView textView1 = new TextView(DepartmentActivity.this);
+                        textView1.setText(result[i].getValue());
+                        TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.8f);
+                        textView1.setLayoutParams(params2);
+                        tableRow.addView(textView1);
+
+                        tableRow.setClickable(true);
+                        tableRow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Set background color of selected row
+                                for (int j = 0; j < tableLayout.getChildCount(); j++) {
+                                    View row = tableLayout.getChildAt(j);
+                                    if (row instanceof TableRow) {
+                                        row.setBackgroundColor(Color.TRANSPARENT);
+                                    }
+                                }
+                                tableRow.setBackgroundColor(Color.YELLOW);
+
+                                // Retrieve the data from the clicked row
+                                TextView idTextView = (TextView) tableRow.getChildAt(0);
+                                TextView typeTextView = (TextView) tableRow.getChildAt(1);
+
+                                selectedID = idTextView.getText().toString();
+                                selectedDepartment = typeTextView.getText().toString();
+
                             }
-                        }
+                        });
 
-                        // Set background color of selected row
-                        tableRow.setBackgroundColor(Color.YELLOW);
-                        View ID = tableRow.getChildAt(0);
-                        View DEPARTMENT = tableRow.getChildAt(1);
 
-                        selectedID=((TextView) ID).getText().toString();
-                        selectedDepartment=((TextView) DEPARTMENT).getText().toString();
-                        // Handle other actions for the selected row
+                        tableLayout.addView(tableRow);
                     }
-                });
-            }
-        }
-    }
-
-    private void populateTable(TableLayout tableLayout) {
-        String[][] roomTypes = {{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"},{"1", "Informatique"}, {"2", "Maths"},{"3", "Physics"}};
-        // Iterate through the data and create rows and cells
-        for (int i = 0; i < roomTypes.length; i++) {
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
-            for (int j = 0; j < roomTypes[i].length; j++) {
-                TextView textView = new TextView(this);
-                textView.setText(roomTypes[i][j]);
-                if (j==0){
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f);
-                    textView.setLayoutParams(params1);
-
                 }
-                else{
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.8f);
-                    textView.setLayoutParams(params1);
-
-                }
-
-                tableRow.addView(textView);
             }
 
-            tableLayout.addView(tableRow);
-        }
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
+                System.out.println("failure");
+            }
+
+        });
     }
+
     private void crud(View v,String type){
 // Inflate the popup_layout.xml
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -212,9 +242,126 @@ public class DepartmentActivity extends AppCompatActivity {
         actionButoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (type=="ADD"){
+                    add(department.getText().toString());
+                }
+                if(type=="EDIT"){
+                    edit(new DataItem(Integer.parseInt(id.getText().toString()),department.getText().toString()));
+                }
+                if(type=="DELETE"){
+                    delete(new DataItem(Integer.parseInt(id.getText().toString()),department.getText().toString()));
+                }
+
                 popupWindow.dismiss();
             }
         });
+    }
+    private void add(String department) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        DepartmentRequests departmentRequests = retrofit.create(DepartmentRequests.class);
+
+        departmentRequests.insertNewDepartment(new ValueRequest(department)).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room type Added", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void edit(DataItem departmentDataItem) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        DepartmentRequests DepartmentRequests = retrofit.create(DepartmentRequests.class);
+
+        DepartmentRequests.updateDepartment(departmentDataItem).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room Type Updated", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void delete(DataItem departmentDataItem) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        DepartmentRequests DepartmentRequests = retrofit.create(DepartmentRequests.class);
+
+        DepartmentRequests.deleteDepartment(departmentDataItem).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room Type Deleted", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
     }
 }
 
