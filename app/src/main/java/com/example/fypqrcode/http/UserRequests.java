@@ -1,8 +1,8 @@
-package com.example.fypqrcode.htpp;
+package com.example.fypqrcode.http;
 
-import com.example.fypqrcode.htpp.requests.LoginRequest;
-import com.example.fypqrcode.htpp.responses.GetCurrentUserResponse;
-import com.example.fypqrcode.htpp.responses.LoginResponse;
+import com.example.fypqrcode.http.requests.LoginRequest;
+import com.example.fypqrcode.http.responses.GetCurrentUserResponse;
+import com.example.fypqrcode.http.responses.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

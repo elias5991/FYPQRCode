@@ -1,8 +1,8 @@
-package com.example.fypqrcode.htpp;
+package com.example.fypqrcode.http;
 
 import com.example.fypqrcode.classes.DataItem;
-import com.example.fypqrcode.htpp.requests.ValueRequest;
-import com.example.fypqrcode.htpp.responses.SuccessResponse;
+import com.example.fypqrcode.http.requests.ValueRequest;
+import com.example.fypqrcode.http.responses.SuccessResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

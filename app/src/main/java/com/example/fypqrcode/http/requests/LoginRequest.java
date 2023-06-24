@@ -1,4 +1,4 @@
-package com.example.fypqrcode.htpp.requests;
+package com.example.fypqrcode.http.requests;
 
 public class LoginRequest {
     public String email;

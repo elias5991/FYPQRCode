@@ -1,0 +1,30 @@
+package com.example.fypqrcode.http;
+
+import com.example.fypqrcode.classes.DataItem;
+import com.example.fypqrcode.http.requests.RoomRequest;
+import com.example.fypqrcode.http.requests.ValueRequest;
+import com.example.fypqrcode.http.responses.RoomResponse;
+import com.example.fypqrcode.http.responses.SuccessResponse;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+
+public interface RoomRequests {
+    @GET("http://10.0.2.2:80/php/controllers/room-controller.php?f=getAllRooms")
+    Call<RoomResponse[]> getAllRooms();
+
+    @POST("http://10.0.2.2:80/php/controllers/room-controller.php?f=insertNewRoom")
+    Call<SuccessResponse> insertNewRoom(@Body RoomRequest roomRequest);
+
+    @PUT("http://10.0.2.2:80/php/controllers/room-controller.php?f=updateRoom")
+    Call<SuccessResponse> updateRoom(@Body RoomRequest roomRequest);
+
+    @POST("http://10.0.2.2:80/php/controllers/room-controller.php?f=deleteRoom")
+    Call<SuccessResponse> deleteRoom(@Body RoomRequest roomRequest);
+
+    @GET("http://10.0.2.2:80/php/controllers/room-controller.php?f=getAllFaculties")
+    Call<DataItem[]> getAllFaculties();
+}

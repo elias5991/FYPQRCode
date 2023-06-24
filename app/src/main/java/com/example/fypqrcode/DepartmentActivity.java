@@ -21,11 +21,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fypqrcode.classes.DataItem;
-import com.example.fypqrcode.htpp.DepartmentRequests;
-import com.example.fypqrcode.htpp.RoomTypeRequests;
-import com.example.fypqrcode.htpp.requests.ValueRequest;
-import com.example.fypqrcode.htpp.responses.ErrorResponse;
-import com.example.fypqrcode.htpp.responses.SuccessResponse;
+import com.example.fypqrcode.http.DepartmentRequests;
+import com.example.fypqrcode.http.requests.ValueRequest;
+import com.example.fypqrcode.http.responses.ErrorResponse;
+import com.example.fypqrcode.http.responses.SuccessResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;

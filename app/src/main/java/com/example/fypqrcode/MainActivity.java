@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fypqrcode.htpp.UserRequests;
-import com.example.fypqrcode.htpp.responses.GetCurrentUserResponse;
+import com.example.fypqrcode.http.UserRequests;
+import com.example.fypqrcode.http.responses.GetCurrentUserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

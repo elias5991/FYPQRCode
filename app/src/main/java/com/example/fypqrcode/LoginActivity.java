@@ -1,6 +1,5 @@
 package com.example.fypqrcode;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,9 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fypqrcode.htpp.UserRequests;
-import com.example.fypqrcode.htpp.requests.LoginRequest;
-import com.example.fypqrcode.htpp.responses.LoginResponse;
+import com.example.fypqrcode.http.UserRequests;
+import com.example.fypqrcode.http.requests.LoginRequest;
+import com.example.fypqrcode.http.responses.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,14 +26,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fypqrcode.classes.DataItem;
 import com.example.fypqrcode.classes.Room;
+import com.example.fypqrcode.http.DepartmentRequests;
+import com.example.fypqrcode.http.RoomRequests;
+import com.example.fypqrcode.http.RoomTypeRequests;
+import com.example.fypqrcode.http.requests.RoomRequest;
+import com.example.fypqrcode.http.requests.ValueRequest;
+import com.example.fypqrcode.http.responses.ErrorResponse;
+import com.example.fypqrcode.http.responses.RoomResponse;
+import com.example.fypqrcode.http.responses.SuccessResponse;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RoomsActivity extends AppCompatActivity {
     private Boolean isSelected = false;
 
-    private Room room= new Room();
+    private RoomResponse room= new RoomResponse();
 
 
     @Override
@@ -101,90 +118,114 @@ public class RoomsActivity extends AppCompatActivity {
             }
         });
 
-        TableLayout roomsT = findViewById(R.id.roomsTable);
-        populateTable(roomsT);
-        for (int i = 0; i < roomsT.getChildCount(); i++) {
-            View row = roomsT.getChildAt(i);
 
-            if (row instanceof TableRow) {
-                TableRow tableRow = (TableRow) row;
+        populateTable();
 
-                tableRow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < roomsT.getChildCount(); i++) {
-                            View row = roomsT.getChildAt(i);
-                            if (row instanceof TableRow) {
-                                row.setBackgroundColor(Color.TRANSPARENT);
-                            }
-                        }
-
-                        // Set background color of selected row
-                        tableRow.setBackgroundColor(Color.YELLOW);
-                        View ID = tableRow.getChildAt(0);
-                        View Name = tableRow.getChildAt(1);
-                        View Type = tableRow.getChildAt(2);
-                        View Space = tableRow.getChildAt(3);
-                        View Department = tableRow.getChildAt(4);
-                        View Faculty = tableRow.getChildAt(5);
-
-                        room.setId(Integer.valueOf((String) ((TextView) ID).getText()));
-                        room.setName(((TextView) Name).getText().toString());
-                        room.setType(((TextView) Type).getText().toString());
-                        room.setSpace(Double.valueOf(((TextView) Space).getText().toString()));
-                        room.setDepartment(((TextView) Department).getText().toString());
-                        room.setFaculty(((TextView) Faculty).getText().toString());
-                        isSelected = true;
-                        // Handle other actions for the selected row
-                    }
-                });
-            }
-        }
     }
 
-    private void populateTable(TableLayout tableLayout) {
-        String[][] roomsTypes = {{"1", "M123", "Conference", "40", "Informatique", "Science-Fanar"}, {"1", "M123", "Class", "40", "Maths", "Pedagogy-II"}, {"1", "M123", "Conference", "40", "Physics", "Genie-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}, {"1", "M123", "Conference", "40", "Informatique", "Science-II"}};
-        // Iterate through the data and create rows and cells
-        for (int i = 0; i < roomsTypes.length; i++) {
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableRow.LayoutParams(
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+    private void populateTable() {
+        TableLayout tableLayout = findViewById(R.id.roomsTable);
+        tableLayout.removeAllViews();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RoomRequests roomRequests = retrofit.create(RoomRequests.class);
 
-            for (int j = 0; j < roomsTypes[i].length; j++) {
-                TextView textView = new TextView(this);
-                textView.setText(roomsTypes[i][j]);
-                if (j == 0) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.08f);
-                    textView.setLayoutParams(params1);
+        roomRequests.getAllRooms().enqueue(new Callback<RoomResponse[]>() {
+            @Override
+            public void onResponse(Call<RoomResponse[]> call, Response<RoomResponse[]> response) {
+                if (response.isSuccessful()) {
+                    RoomResponse[] result = response.body();
 
-                } else if (j == 1) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.15f);
-                    textView.setLayoutParams(params1);
+                    // Iterate through the data and create rows and cells
+                    for (int i = 0; i < result.length; i++) {
+                        TableRow tableRow = new TableRow(RoomsActivity.this);
+                        tableRow.setLayoutParams(new TableRow.LayoutParams(
+                                TableRow.LayoutParams.MATCH_PARENT,
+                                TableRow.LayoutParams.WRAP_CONTENT));
+                        TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.08f);
+                        TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.15f);
+                        TableRow.LayoutParams params3 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f);
+                        TableRow.LayoutParams params4 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.12f);
+                        TableRow.LayoutParams params5 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.22f);
+                        TableRow.LayoutParams params6 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.23f);
 
-                } else if (j == 2) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.2f);
-                    textView.setLayoutParams(params1);
+                        TextView textView = new TextView(RoomsActivity.this);
+                        textView.setText(result[i].getId().toString());
 
-                } else if (j == 3) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.12f);
-                    textView.setLayoutParams(params1);
+                        textView.setLayoutParams(params1);
+                        tableRow.addView(textView);
+                        TextView textView1 = new TextView(RoomsActivity.this);
+                        textView1.setText(result[i].getName());
+                        textView1.setLayoutParams(params2);
+                        tableRow.addView(textView1);
 
-                } else if (j == 4) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.22f);
-                    textView.setLayoutParams(params1);
+                        TextView textView3 = new TextView(RoomsActivity.this);
+                        textView3.setText(result[i].getType());
+                        textView3.setLayoutParams(params3);
+                        tableRow.addView(textView3);
 
-                } else if (j == 5) {
-                    TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.23f);
-                    textView.setLayoutParams(params1);
+                        TextView textView4 = new TextView(RoomsActivity.this);
+                        textView4.setText(result[i].getSpace().toString());
+                        textView4.setLayoutParams(params4);
+                        tableRow.addView(textView4);
 
+                        TextView textView5 = new TextView(RoomsActivity.this);
+                        textView5.setText(result[i].getDepartment());
+                        textView5.setLayoutParams(params5);
+                        tableRow.addView(textView5);
+
+                        TextView textView6 = new TextView(RoomsActivity.this);
+                        textView6.setText(result[i].getFaculty());
+                        textView6.setLayoutParams(params6);
+                        tableRow.addView(textView6);
+
+                        tableRow.setClickable(true);
+                        tableRow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Set background color of selected row
+                                for (int j = 0; j < tableLayout.getChildCount(); j++) {
+                                    View row = tableLayout.getChildAt(j);
+                                    if (row instanceof TableRow) {
+                                        row.setBackgroundColor(Color.TRANSPARENT);
+                                    }
+                                }
+                                tableRow.setBackgroundColor(Color.YELLOW);
+
+                                // Retrieve the data from the clicked row
+                                View ID = tableRow.getChildAt(0);
+                                View Name = tableRow.getChildAt(1);
+                                View Type = tableRow.getChildAt(2);
+                                View Space = tableRow.getChildAt(3);
+                                View Department = tableRow.getChildAt(4);
+                                View Faculty = tableRow.getChildAt(5);
+
+                                room.setId(Integer.valueOf((String) ((TextView) ID).getText()));
+                                room.setName(((TextView) Name).getText().toString());
+                                room.setType(((TextView) Type).getText().toString());
+                                room.setSpace(Double.valueOf(((TextView) Space).getText().toString()));
+                                room.setDepartment(((TextView) Department).getText().toString());
+                                room.setFaculty(((TextView) Faculty).getText().toString());
+                                isSelected = true;
+                            }
+                        });
+
+
+                        tableLayout.addView(tableRow);
+                    }
                 }
-
-                tableRow.addView(textView);
             }
 
-            tableLayout.addView(tableRow);
-        }
+            @Override
+            public void onFailure(Call<RoomResponse[]> call, Throwable t) {
+
+            }
+
+        });
+
+
+
+
     }
 
     private void crud(View v, String type) {
@@ -198,39 +239,158 @@ public class RoomsActivity extends AppCompatActivity {
         EditText space = popupView.findViewById(R.id.space);
         Spinner department = popupView.findViewById(R.id.departmentSpinner);
         Spinner faculty = popupView.findViewById(R.id.facultySpinner);
-
         List<DataItem> roomTypeS = new ArrayList<>();
-        roomTypeS.add(new DataItem(1, "Conference"));
-        roomTypeS.add(new DataItem(2, "Class"));
-        roomTypeS.add(new DataItem(3, "Bathroom"));
-
-        ArrayAdapter<DataItem> roomTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roomTypeS);
-        roomTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        roomType.setAdapter(roomTypeAdapter);
-
-
-
-
-
         List<DataItem> departmentS = new ArrayList<>();
-        departmentS.add(new DataItem(1, "Informatique"));
-        departmentS.add(new DataItem(2, "Maths"));
-        departmentS.add(new DataItem(3, "Physics"));
-
-        ArrayAdapter<DataItem> departmentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, departmentS);
-        departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        department.setAdapter(departmentAdapter);
-
-
-
         List<DataItem> facultyS = new ArrayList<>();
-        facultyS.add(new DataItem(1, "Science-II"));
-        facultyS.add(new DataItem(2, "Pedagogy-II"));
-        facultyS.add(new DataItem(3, "Genie-II"));
+         DataItem selectedRoomType = new DataItem();
+         DataItem selectedDepartment = new DataItem();
+        DataItem selectedFaculty = new DataItem();
+        ArrayAdapter<DataItem> roomTypeAdapter = new ArrayAdapter<>(RoomsActivity.this, android.R.layout.simple_spinner_item, roomTypeS);
+        ArrayAdapter<DataItem> departmentAdapter = new ArrayAdapter<>(RoomsActivity.this, android.R.layout.simple_spinner_item, departmentS);
+        ArrayAdapter<DataItem> facultyAdapter = new ArrayAdapter<>(RoomsActivity.this, android.R.layout.simple_spinner_item, facultyS);
 
-        ArrayAdapter<DataItem> facultyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, facultyS);
-        facultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        faculty.setAdapter(facultyAdapter);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
+
+        roomTypeRequests.getAllRoomTypes().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                DataItem[] result = response.body();
+                for (int i = 0; i < result.length; i++) {
+                    roomTypeS.add(new DataItem(result[i].getId(), result[i].getValue()));
+                }
+                roomTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                roomType.setAdapter(roomTypeAdapter);
+                if (type == "EDIT" || type == "DELETE") {
+                    for (int i = 0; i < roomTypeAdapter.getCount(); i++) {
+                        DataItem item = roomTypeAdapter.getItem(i);
+                        if (item.getValue().equals(room.getType())) {
+                            roomType.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                roomType.setOnItemSelectedListener  (new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedRoomType.setId(roomTypeS.get(position).getId());
+                        selectedRoomType.setValue(roomTypeS.get(position).getValue());
+                        roomTypeAdapter.notifyDataSetChanged();            }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+            DepartmentRequests departmentRequests = retrofit.create(DepartmentRequests.class);
+
+        departmentRequests.getAllDepartments().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                DataItem[] result = response.body();
+                for (int i = 0; i < result.length; i++) {
+                    departmentS.add(new DataItem(result[i].getId(), result[i].getValue()));
+                }
+                departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                department.setAdapter(departmentAdapter);
+
+                if (type == "EDIT" || type == "DELETE") {
+
+                    for (int i = 0; i < departmentAdapter.getCount(); i++) {
+                        DataItem item = departmentAdapter.getItem(i);
+                        if (item.getValue().equals(room.getDepartment())) {
+                            department.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedDepartment.setId(departmentS.get(position).getId());
+                        selectedDepartment.setValue(departmentS.get(position).getValue());
+                        departmentAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+
+                });
+            }
+
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+
+        RoomRequests roomRequests = retrofit.create(RoomRequests.class);
+        roomRequests.getAllFaculties().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                DataItem[] result = response.body();
+                for (int i =0;i<result.length;i++)
+                {
+                    facultyS.add(new DataItem(result[i].getId(),result[i].getValue()));
+                }
+                facultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                faculty.setAdapter(facultyAdapter);
+                if (type == "EDIT" || type == "DELETE") {
+
+                    for (int i = 0; i < facultyAdapter.getCount(); i++) {
+                        DataItem item = facultyAdapter.getItem(i);
+                        if (item.getValue().equals(room.getFaculty())) {
+                            faculty.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                faculty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedFaculty.setId(facultyS.get(position).getId());
+                        selectedFaculty.setValue(facultyS.get(position).getValue());
+                        facultyAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+
+                });
+            }
+
+
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+
+            }
+        });
+
 
 
 
@@ -242,27 +402,12 @@ public class RoomsActivity extends AppCompatActivity {
             idLabel.setVisibility(GONE);
             roomID.setVisibility(GONE);
         } else if (type == "EDIT" || type == "DELETE") {
-            for (int i = 0; i < roomTypeAdapter.getCount(); i++) {
-                DataItem item = roomTypeAdapter.getItem(i);
-                if (item.getValue() == room.getType()) {
-                    roomType.setSelection(i);
-                    break;
-                }
-            }
-            for (int i = 0; i < departmentAdapter.getCount(); i++) {
-                DataItem item = departmentAdapter.getItem(i);
-                if (item.getValue() == room.getDepartment()) {
-                    department.setSelection(i);
-                    break;
-                }
-            }
-            for (int i = 0; i < facultyAdapter.getCount(); i++) {
-                DataItem item = facultyAdapter.getItem(i);
-                if (item.getValue() == room.getFaculty()) {
-                    faculty.setSelection(i);
-                    break;
-                }
-            }
+
+            department.setEnabled(false);
+            department.setFocusable(false);
+
+            faculty.setEnabled(false);
+            faculty.setFocusable(false);
                 roomID.setText(room.getId().toString());
                 roomName.setText(room.getName());
                 space.setText(room.getSpace().toString());
@@ -277,11 +422,11 @@ public class RoomsActivity extends AppCompatActivity {
                     space.setEnabled(false);
                     space.setFocusable(false);
 
-                    department.setEnabled(false);
-                    department.setFocusable(false);
-
-                    faculty.setEnabled(false);
-                    faculty.setFocusable(false);
+//                    department.setEnabled(false);
+//                    department.setFocusable(false);
+//
+//                    faculty.setEnabled(false);
+//                    faculty.setFocusable(false);
                 }
             }
 
@@ -308,10 +453,128 @@ public class RoomsActivity extends AppCompatActivity {
             actionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (type=="ADD"){
+                        add(new RoomRequest(0,roomName.getText().toString(),selectedRoomType.getId(),Double.parseDouble(space.getText().toString()),selectedDepartment.getId(),selectedFaculty.getId()));
+                    }
+                    if(type=="EDIT"){
+                        edit(new RoomRequest(Integer.parseInt((String) roomID.getText()),roomName.getText().toString(),selectedRoomType.getId(),Double.parseDouble(space.getText().toString()),selectedDepartment.getId(),selectedFaculty.getId()));
+                    }
+                    if(type=="DELETE"){
+                        delete(new RoomRequest(Integer.parseInt((String) roomID.getText()),null,null,null,null,null));
+                    }
+
+
                     popupWindow.dismiss();
                 }
             });
         }
+    private void add(RoomRequest roomRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RoomRequests roomRequests = retrofit.create(RoomRequests.class);
+
+        roomRequests.insertNewRoom(roomRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room Added", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void edit(RoomRequest roomRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RoomRequests roomRequests = retrofit.create(RoomRequests.class);
+
+        roomRequests.updateRoom(roomRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room Updated", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void delete(RoomRequest roomRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        RoomRequests roomRequests = retrofit.create(RoomRequests.class);
+
+        roomRequests.deleteRoom(roomRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Room Deleted", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
     }
 
 

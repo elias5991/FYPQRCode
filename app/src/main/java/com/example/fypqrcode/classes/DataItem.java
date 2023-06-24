@@ -9,6 +9,10 @@ public class DataItem {
         this.value=value;
     }
 
+    public DataItem() {
+
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,4 +1,4 @@
-package com.example.fypqrcode.htpp.responses;
+package com.example.fypqrcode.http.responses;
 
 public class GetCurrentUserResponse {
     public Integer id;
