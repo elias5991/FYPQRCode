@@ -1,6 +1,6 @@
 package com.example.fypqrcode.http.responses;
 
-public class GetCurrentUserResponse {
+public class UserResponse {
     public Integer id;
     public String email;
     public String type;
@@ -65,13 +65,5 @@ public class GetCurrentUserResponse {
         this.phoneNumber = phoneNumber;
     }
 
-    public GetCurrentUserResponse(Integer id, String email, String type, String firstName, String lastName, String role, String phoneNumber) {
-        this.id = id;
-        this.email = email;
-        this.type = type;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.phoneNumber = phoneNumber;
-    }
+
 }

@@ -25,12 +25,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fypqrcode.classes.DataItem;
-import com.example.fypqrcode.classes.Room;
 import com.example.fypqrcode.http.DepartmentRequests;
 import com.example.fypqrcode.http.RoomRequests;
 import com.example.fypqrcode.http.RoomTypeRequests;
 import com.example.fypqrcode.http.requests.RoomRequest;
-import com.example.fypqrcode.http.requests.ValueRequest;
 import com.example.fypqrcode.http.responses.ErrorResponse;
 import com.example.fypqrcode.http.responses.RoomResponse;
 import com.example.fypqrcode.http.responses.SuccessResponse;

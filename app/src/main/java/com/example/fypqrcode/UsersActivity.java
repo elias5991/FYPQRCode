@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,15 +28,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fypqrcode.classes.DataItem;
-import com.example.fypqrcode.classes.User;
+import com.example.fypqrcode.http.UserRequests;
+import com.example.fypqrcode.http.requests.UserRequest;
+import com.example.fypqrcode.http.responses.ErrorResponse;
+import com.example.fypqrcode.http.responses.SuccessResponse;
+import com.example.fypqrcode.http.responses.UserResponse;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UsersActivity extends AppCompatActivity {
     private Boolean isSelected = false;
 
-    private User user= new User();
+    private UserResponse user= new UserResponse();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,91 +111,128 @@ public class UsersActivity extends AppCompatActivity {
                 }
             }
         });
-        TableLayout usersT = findViewById(R.id.userTable);
-        populateTable(usersT);
-        for (int i = 0; i < usersT.getChildCount(); i++) {
-            View row = usersT.getChildAt(i);
 
-            if (row instanceof TableRow) {
-                TableRow tableRow = (TableRow) row;
-
-                tableRow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < usersT.getChildCount(); i++) {
-                            View row = usersT.getChildAt(i);
-                            if (row instanceof TableRow) {
-                                row.setBackgroundColor(Color.TRANSPARENT);
-                            }
-                        }
-
-                        // Set background color of selected row
-                        tableRow.setBackgroundColor(Color.YELLOW);
-                        View ID = tableRow.getChildAt(0);
-                        View FirstName = tableRow.getChildAt(1);
-                        View LastName = tableRow.getChildAt(2);
-                        View PhoneNumber = tableRow.getChildAt(3);
-                        View Type = tableRow.getChildAt(4);
-                        View Role = tableRow.getChildAt(5);
-                        View Email = tableRow.getChildAt(6);
-
-                        user.setId(Integer.valueOf((String) ((TextView) ID).getText()));
-                        user.setFirstName(((TextView) FirstName).getText().toString());
-                        user.setLastName(((TextView) LastName).getText().toString());
-                        user.setPhoneNumber(((TextView) PhoneNumber).getText().toString());
-                        user.setType(((TextView) Type).getText().toString());
-                        user.setRole(((TextView) Role).getText().toString());
-                        user.setEmail(((TextView) Email).getText().toString());
-                        isSelected = true;
-                        // Handle other actions for the selected row
-                    }
-                });
-            }
-        }
+        populateTable();
     }
 
 
-    private void populateTable(TableLayout usersT) {
+    private void populateTable() {
+        TableLayout tableLayout = findViewById(R.id.userTable);
+        tableLayout.removeAllViews();
     TableLayout headerT = findViewById(R.id.usersHeaderTable);
     TableRow headerR = (TableRow) headerT.getChildAt(0);
-    TableLayout tableLayout = findViewById(R.id.userTable);
-    String[][] users = {{"1", "Pamela", "Nohra", "71893615", "Admin", "Engineer", "pamela.nohra@outlook.com"},{"1", "Pamela", "Nohra", "71893615", "Admin", "Engineer", "pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Guest","Doctor","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"}, {"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.com"},{"1", "Pamela","Nohra","71893615","Admin","Engineer","pamela.nohra@outlook.comlast"}};
 
+    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+            .addConverterFactory(GsonConverterFactory.create()).build();
+    UserRequests userRequests = retrofit.create(UserRequests.class);
 
-    for (int i = 0; i < users.length; i++) {
-        TableRow tableRow = new TableRow(this);
-        tableRow.setLayoutParams(new TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-
-        for (int j = 0; j < users[i].length; j++) {
-            TextView textView = new TextView(this);
-            textView.setText(users[i][j]);
-            tableRow.addView(textView);
-        }
-
-        tableLayout.addView(tableRow);
-    }
-
-    tableLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    userRequests.getUsers().enqueue(new Callback<UserResponse[]>() {
         @Override
-        public void onGlobalLayout() {
-            tableLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        public void onResponse(Call<UserResponse[]> call, Response<UserResponse[]> response) {
+            if (response.isSuccessful()) {
+                UserResponse[] result = response.body();
 
-            for (int j = 0; j < headerR.getChildCount(); j++) {
-                View headerView = headerR.getChildAt(j);
-                int headerWidth = headerView.getWidth();
-
-                for (int i = 0; i < tableLayout.getChildCount(); i++) {
-                    TableRow tableRow = (TableRow) tableLayout.getChildAt(i);
-                    TextView textView = (TextView) tableRow.getChildAt(j);
-                    textView.setLayoutParams(new TableRow.LayoutParams(
-                            headerWidth,
+                // Iterate through the data and create rows and cells
+                for (int i = 0; i < result.length; i++) {
+                    TableRow tableRow = new TableRow(UsersActivity.this);
+                    tableRow.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TextView textView = new TextView(UsersActivity.this);
+                    textView.setText(result[i].getId().toString());
+                    tableRow.addView(textView);
+
+                    TextView textView2 = new TextView(UsersActivity.this);
+                    textView2.setText(result[i].getFirstName());
+                    tableRow.addView(textView2);
+
+                    TextView textView3 = new TextView(UsersActivity.this);
+                    textView3.setText(result[i].getLastName());
+                    tableRow.addView(textView3);
+
+                    TextView textView4 = new TextView(UsersActivity.this);
+                    textView4.setText(result[i].getPhoneNumber());
+                    tableRow.addView(textView4);
+
+                    TextView textView5 = new TextView(UsersActivity.this);
+                    textView5.setText(result[i].getType());
+                    tableRow.addView(textView5);
+
+                    TextView textView6 = new TextView(UsersActivity.this);
+                    textView6.setText(result[i].getRole());
+                    tableRow.addView(textView6);
+
+                    TextView textView7 = new TextView(UsersActivity.this);
+                    textView7.setText(result[i].getEmail());
+                    tableRow.addView(textView7);
+
+
+                    tableRow.setClickable(true);
+                    tableRow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Set background color of selected row
+                            for (int j = 0; j < tableLayout.getChildCount(); j++) {
+                                View row = tableLayout.getChildAt(j);
+                                if (row instanceof TableRow) {
+                                    row.setBackgroundColor(Color.TRANSPARENT);
+                                }
+                            }
+                            tableRow.setBackgroundColor(Color.YELLOW);
+
+                            // Retrieve the data from the clicked row
+                            View ID = tableRow.getChildAt(0);
+                            View FirstName = tableRow.getChildAt(1);
+                            View LastName = tableRow.getChildAt(2);
+                            View PhoneNumber = tableRow.getChildAt(3);
+                            View Type = tableRow.getChildAt(4);
+                            View Role = tableRow.getChildAt(5);
+                            View Email = tableRow.getChildAt(6);
+
+                            user.setId(Integer.valueOf((String) ((TextView) ID).getText()));
+                            user.setFirstName(((TextView) FirstName).getText().toString());
+                            user.setType(((TextView) Type).getText().toString());
+                            user.setLastName(((TextView) LastName).getText().toString());
+                            user.setPhoneNumber(((TextView) PhoneNumber).getText().toString());
+                            user.setRole(((TextView) Role).getText().toString());
+                            user.setEmail(((TextView) Email).getText().toString());
+                            isSelected = true;
+                        }
+                    });
+
+
+                    tableLayout.addView(tableRow);
                 }
             }
+            tableLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    tableLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    for (int j = 0; j < headerR.getChildCount(); j++) {
+                        View headerView = headerR.getChildAt(j);
+                        int headerWidth = headerView.getWidth();
+
+                        for (int i = 0; i < tableLayout.getChildCount(); i++) {
+                            TableRow tableRow = (TableRow) tableLayout.getChildAt(i);
+                            TextView textView = (TextView) tableRow.getChildAt(j);
+                            textView.setLayoutParams(new TableRow.LayoutParams(
+                                    headerWidth,
+                                    TableRow.LayoutParams.WRAP_CONTENT));
+                        }
+                    }
+                }
+            });
+        }
+
+
+        @Override
+        public void onFailure(Call<UserResponse[]> call, Throwable t) {
+
         }
     });
+
 }
 
     private void crud(View v, String type) {
@@ -195,29 +247,137 @@ public class UsersActivity extends AppCompatActivity {
         Spinner role = popupView.findViewById(R.id.roleSpinner);
         EditText email = popupView.findViewById(R.id.email);
         EditText phoneNumber = popupView.findViewById(R.id.phoneNumber);
-
+        TextView passwordLabel = popupView.findViewById(R.id.passwordLabel);
+        TextView retypePasswordLabel = popupView.findViewById(R.id.retypePasswordLabel);
+        EditText password = popupView.findViewById(R.id.password);
+        EditText retypePassword = popupView.findViewById(R.id.retypePassword);
         List<DataItem> userTypeS = new ArrayList<>();
-        userTypeS.add(new DataItem(1, "Admin"));
-        userTypeS.add(new DataItem(2, "Guest"));
-
-        ArrayAdapter<DataItem> userTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, userTypeS);
-        userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        userType.setAdapter(userTypeAdapter);
-
-
-
-
-
         List<DataItem> userRoleS = new ArrayList<>();
-        userRoleS.add(new DataItem(1, "Engineer"));
-        userRoleS.add(new DataItem(2, "Doctor"));
-
+        ArrayAdapter<DataItem> userTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, userTypeS);
         ArrayAdapter<DataItem> userRoleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, userRoleS);
-        userRoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        role.setAdapter(userRoleAdapter);
+        DataItem selectedUserType = new DataItem();
+        DataItem selectedUserRole = new DataItem();
 
 
 
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            public void afterTextChanged(Editable s) {
+
+
+                    password.setTextColor(getResources().getColor(R.color.black));
+                    retypePassword.setTextColor(getResources().getColor(R.color.black));
+
+            }
+
+    });
+        retypePassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            public void afterTextChanged(Editable s) {
+
+
+                    password.setTextColor(getResources().getColor(R.color.black));
+                    retypePassword.setTextColor(getResources().getColor(R.color.black));
+
+            }
+
+        });
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        UserRequests userRequests = retrofit.create(UserRequests.class);
+
+        userRequests.getAllAccTypes().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                DataItem[] result = response.body();
+                for (int i = 0; i < result.length; i++) {
+                    userTypeS.add(new DataItem(result[i].getId(), result[i].getValue()));
+                }
+                userTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                userType.setAdapter(userTypeAdapter);
+                if (type.equals("EDIT") || type.equals("DELETE")) {
+                    for (int i = 0; i < userTypeAdapter.getCount(); i++) {
+                        DataItem item = userTypeAdapter.getItem(i);
+                        if (item.getValue().equals(user.getType())) {
+                            userType.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                userType.setOnItemSelectedListener  (new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedUserType.setId(userTypeS.get(position).getId());
+                        selectedUserType.setValue(userTypeS.get(position).getValue());
+                        userTypeAdapter.notifyDataSetChanged();            }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+
+            }
+        });
+
+        userRequests.getAllRoleTypes().enqueue(new Callback<DataItem[]>() {
+            @Override
+            public void onResponse(Call<DataItem[]> call, Response<DataItem[]> response) {
+                DataItem[] result = response.body();
+                for (int i = 0; i < result.length; i++) {
+                    userRoleS.add(new DataItem(result[i].getId(), result[i].getValue()));
+                }
+                userRoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                role.setAdapter(userRoleAdapter);
+                if (type == "EDIT" || type == "DELETE") {
+                    for (int i = 0; i < userRoleAdapter.getCount(); i++) {
+                        DataItem item = userRoleAdapter.getItem(i);
+                        if (item.getValue().equals(user.getRole())) {
+                            role.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                role.setOnItemSelectedListener  (new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedUserRole.setId(userRoleS.get(position).getId());
+                        selectedUserRole.setValue(userRoleS.get(position).getValue());
+                        userRoleAdapter.notifyDataSetChanged();            }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<DataItem[]> call, Throwable t) {
+
+            }
+        });
 
         Button actionButton = popupView.findViewById(R.id.actionBtn);
         actionButton.setText(type);
@@ -225,26 +385,17 @@ public class UsersActivity extends AppCompatActivity {
             idLabel.setVisibility(GONE);
             userID.setVisibility(GONE);
         } else if (type == "EDIT" || type == "DELETE") {
-            for (int i = 0; i < userTypeAdapter.getCount(); i++) {
-                DataItem item = userTypeAdapter.getItem(i);
-                if (item.getValue() == user.getType()) {
-                    userType.setSelection(i);
-                    break;
-                }
-            }
-            for (int i = 0; i < userRoleAdapter.getCount(); i++) {
-                DataItem item = userRoleAdapter.getItem(i);
-                if (item.getValue() == user.getRole()) {
-                    role.setSelection(i);
-                    break;
-                }
-            }
+
 
             userID.setText(user.getId().toString());
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
             email.setText(user.getEmail());
             phoneNumber.setText(user.getPhoneNumber());
+            passwordLabel.setVisibility(GONE);
+            password.setVisibility(GONE);
+            retypePasswordLabel.setVisibility(GONE);
+            retypePassword.setVisibility(GONE);
 
             if (type == "DELETE") {
                 firstName.setEnabled(false);
@@ -282,7 +433,9 @@ public class UsersActivity extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 popupWindow.dismiss();
+
             }
         });
 
@@ -290,9 +443,138 @@ public class UsersActivity extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
+
+                    if (type=="ADD"){
+                    if(password.getText().toString().equals(retypePassword.getText().toString()))
+                    {
+                        add(new UserRequest(0,email.getText().toString(),selectedUserType.getId(),firstName.getText().toString(),lastName.getText().toString(),selectedUserRole.getId(),phoneNumber.getText().toString(),password.getText().toString()));
+                        popupWindow.dismiss();
+                    }
+                    else
+                    {
+                        password.setTextColor(Color.RED);
+                        retypePassword.setTextColor(Color.RED);
+                        Toast.makeText(getApplicationContext(), "Passwords doesn't match", Toast.LENGTH_LONG).show();
+
+                    }
+                    }
+                    if(type=="EDIT") {
+                        edit(new UserRequest(Integer.parseInt(userID.getText().toString()), email.getText().toString(), selectedUserType.getId(), firstName.getText().toString(), lastName.getText().toString(), selectedUserRole.getId(), phoneNumber.getText().toString(), null));
+                        popupWindow.dismiss();
+                    }
+                    if(type=="DELETE"){
+                        delete(new UserRequest(Integer.parseInt((String) userID.getText()),null,null,null,null,null,null,null));
+                        popupWindow.dismiss();
+                    }
             }
         });
+    }
+    private void add(UserRequest userRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        UserRequests userRequests = retrofit.create(UserRequests.class);
+
+        userRequests.insertNewUser(userRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "User Added", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void edit(UserRequest userRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        UserRequests userRequests = retrofit.create(UserRequests.class);
+
+        userRequests.updateUser(userRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void delete(UserRequest userRequest) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        UserRequests userRequests = retrofit.create(UserRequests.class);
+
+        userRequests.deleteUser(userRequest).enqueue(
+                new Callback<SuccessResponse>() {
+                    @Override
+                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
+                            populateTable();
+                        }
+                        else
+                        {
+                            Gson gson=new Gson();
+                            ErrorResponse errorResponse = null;
+                            try {
+                                errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                                String errorMessage = errorResponse.getError();
+                                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+
+                    }
+                });
     }
 }
 

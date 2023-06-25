@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fypqrcode.http.UserRequests;
-import com.example.fypqrcode.http.responses.GetCurrentUserResponse;
+import com.example.fypqrcode.http.responses.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -112,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("App", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email","");
 
-        userRequests.getCurrentUser("getCurrentUser",email).enqueue(new Callback<GetCurrentUserResponse>() {
+        userRequests.getCurrentUser("getCurrentUser",email).enqueue(new Callback<UserResponse>() {
 
             @Override
-            public void onResponse(Call<GetCurrentUserResponse> call, Response<GetCurrentUserResponse> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
-                    GetCurrentUserResponse result = response.body();
+                    UserResponse result = response.body();
 
                     ID.setText(result.getId().toString());
                     LastName.setText(result.getLastName());
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetCurrentUserResponse> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Something Went Wrong", Toast.LENGTH_LONG).show();
                 System.out.println("failure");
             }
