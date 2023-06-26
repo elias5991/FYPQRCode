@@ -124,7 +124,7 @@ public class RoomsActivity extends AppCompatActivity {
     private void populateTable() {
         TableLayout tableLayout = findViewById(R.id.roomsTable);
         tableLayout.removeAllViews();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomRequests roomRequests = retrofit.create(RoomRequests.class);
 
@@ -247,7 +247,7 @@ public class RoomsActivity extends AppCompatActivity {
         ArrayAdapter<DataItem> departmentAdapter = new ArrayAdapter<>(RoomsActivity.this, android.R.layout.simple_spinner_item, departmentS);
         ArrayAdapter<DataItem> facultyAdapter = new ArrayAdapter<>(RoomsActivity.this, android.R.layout.simple_spinner_item, facultyS);
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
 
@@ -467,7 +467,7 @@ public class RoomsActivity extends AppCompatActivity {
             });
         }
     private void add(RoomRequest roomRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomRequests roomRequests = retrofit.create(RoomRequests.class);
 
@@ -503,7 +503,7 @@ public class RoomsActivity extends AppCompatActivity {
     }
 
     private void edit(RoomRequest roomRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomRequests roomRequests = retrofit.create(RoomRequests.class);
 
@@ -539,7 +539,7 @@ public class RoomsActivity extends AppCompatActivity {
     }
 
     private void delete(RoomRequest roomRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomRequests roomRequests = retrofit.create(RoomRequests.class);
 

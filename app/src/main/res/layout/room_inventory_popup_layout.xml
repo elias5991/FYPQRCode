@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C8C8C8"
+    >
+
+
+    <TextView
+        android:id="@+id/inventoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Inventory:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:layout_toRightOf="@id/inventoryLabel"
+        android:id="@+id/inventorySpinner"
+        android:layout_alignTop="@id/inventoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/quantityLabel"
+        android:layout_below="@id/inventoryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="Quantity:"
+        tools:ignore="MissingConstraints"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@id/inventoryLabel"
+        android:layout_alignTop="@id/quantityLabel"
+        android:layout_alignBottom="@id/quantityLabel"
+        android:layout_toRightOf="@id/quantityLabel"
+        android:hint="Write Quantity"/>
+
+
+    <Button
+        android:layout_below="@id/quantityLabel"
+        android:id="@+id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action"
+        android:backgroundTint="#3162a4"/>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_below="@id/quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_toRightOf="@id/actionBtn"
+        android:layout_marginLeft="8dp"
+        android:backgroundTint="#3162a4"/>
+</RelativeLayout>

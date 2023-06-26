@@ -122,7 +122,7 @@ public class UsersActivity extends AppCompatActivity {
     TableLayout headerT = findViewById(R.id.usersHeaderTable);
     TableRow headerR = (TableRow) headerT.getChildAt(0);
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
             .addConverterFactory(GsonConverterFactory.create()).build();
     UserRequests userRequests = retrofit.create(UserRequests.class);
 
@@ -299,7 +299,7 @@ public class UsersActivity extends AppCompatActivity {
 
         });
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UserRequests userRequests = retrofit.create(UserRequests.class);
 
@@ -470,7 +470,7 @@ public class UsersActivity extends AppCompatActivity {
         });
     }
     private void add(UserRequest userRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UserRequests userRequests = retrofit.create(UserRequests.class);
 
@@ -506,7 +506,7 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void edit(UserRequest userRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UserRequests userRequests = retrofit.create(UserRequests.class);
 
@@ -542,7 +542,7 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void delete(UserRequest userRequest) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UserRequests userRequests = retrofit.create(UserRequests.class);
 

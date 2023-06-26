@@ -127,7 +127,7 @@ public class DepartmentActivity extends AppCompatActivity {
     private void populateTable() {
         TableLayout tableLayout = findViewById(R.id.departmentTable);
         tableLayout.removeAllViews();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         DepartmentRequests departmentRequests = retrofit.create(DepartmentRequests.class);
 
@@ -256,7 +256,7 @@ public class DepartmentActivity extends AppCompatActivity {
         });
     }
     private void add(String department) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         DepartmentRequests departmentRequests = retrofit.create(DepartmentRequests.class);
 
@@ -292,7 +292,7 @@ public class DepartmentActivity extends AppCompatActivity {
     }
 
     private void edit(DataItem departmentDataItem) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         DepartmentRequests DepartmentRequests = retrofit.create(DepartmentRequests.class);
 
@@ -328,7 +328,7 @@ public class DepartmentActivity extends AppCompatActivity {
     }
 
     private void delete(DataItem departmentDataItem) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         DepartmentRequests DepartmentRequests = retrofit.create(DepartmentRequests.class);
 

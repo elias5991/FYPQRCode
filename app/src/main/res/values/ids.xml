@@ -39,4 +39,6 @@
     <item name="btnLayout2" type="id" />
     <item name="retypPassword" type="id" />
     <item name="retypePassword" type="id" />
+    <item name="inventoriesTable" type="id" />
+    <item name="quantity" type="id" />
 </resources>

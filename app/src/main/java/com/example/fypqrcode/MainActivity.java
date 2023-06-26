@@ -1,6 +1,7 @@
 package com.example.fypqrcode;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,10 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fypqrcode.http.RoomRequests;
 import com.example.fypqrcode.http.UserRequests;
 import com.example.fypqrcode.http.responses.UserResponse;
+import com.example.fypqrcode.http.responses.Valid;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,22 +35,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_layout);
 
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         UserRequests userRequests  = retrofit.create(UserRequests.class);
 
         fillUser(userRequests);
 
 
-//    //scan qr code button
-//        Button scanQrCodeB = findViewById(R.id.scanQRCodeBtn);
-//        scanQrCodeB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, UsersActivity.class);
-//                startActivity(i);
-//                finish();            }
-//        });
+    //scan qr code button
+        Button scanQrCodeB = findViewById(R.id.scanQRCodeBtn);
+        scanQrCodeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanCode();           }
+        });
 
 
         //users button
@@ -96,6 +101,65 @@ public class MainActivity extends AppCompatActivity {
                 finish();            }
         });
     }
+
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+//        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(ScanQRCodeActivity.class);
+        barLaucher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
+                    .addConverterFactory(GsonConverterFactory.create()).build();
+            RoomRequests roomRequests = retrofit.create(RoomRequests.class);
+            roomRequests.roomExists(result.getContents().toString()).enqueue(new Callback<Valid>() {
+                @Override
+                public void onResponse(Call<Valid> call, Response<Valid> response) {
+                    Valid results = response.body();
+                    if (results.getValid().toString().equals("false")) {
+                        Toast.makeText(getApplicationContext(), "Invalid Room, Try Again.", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        SharedPreferences sharedPreferences = getSharedPreferences("App", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor sharedPreferencesEdit = sharedPreferences.edit();
+                        sharedPreferencesEdit.putString("roomID", result.getContents().toString());
+                        sharedPreferencesEdit.commit();
+                        Intent i = new Intent(MainActivity.this, RoomInventoryActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Valid> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Invalid Room, Try Again.", Toast.LENGTH_LONG).show();
+
+
+                }
+            });
+//            builder.setTitle("Result");
+//            builder.setMessage(result.getContents());
+
+//            if (!isFinishing()) {
+//                // Show the dialog here
+//
+//                builder.setPositiveButton("Invalid Room", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                }).show();
+//            }
+        }
+    });
     public void fillUser(UserRequests userRequests) {
 
         TextView ID = findViewById(R.id.userID);
@@ -142,4 +206,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

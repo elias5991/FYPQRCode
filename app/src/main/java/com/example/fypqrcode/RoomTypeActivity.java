@@ -131,7 +131,7 @@
         private void populateTable() {
             TableLayout tableLayout = findViewById(R.id.roomTypeTable);
             tableLayout.removeAllViews();
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                     .addConverterFactory(GsonConverterFactory.create()).build();
             RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
             roomTypeRequests.getAllRoomTypes().enqueue(new Callback<DataItem[]>() {
@@ -264,7 +264,7 @@
     }
 
     private void add(String roomType) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
 
@@ -300,7 +300,7 @@
     }
 
         private void edit(DataItem roomTypeDataItem) {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                     .addConverterFactory(GsonConverterFactory.create()).build();
             RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
 
@@ -336,7 +336,7 @@
         }
 
         private void delete(DataItem roomTypeDataItem) {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:80/php/controllers/")
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:80/php/controllers/")
                     .addConverterFactory(GsonConverterFactory.create()).build();
             RoomTypeRequests roomTypeRequests = retrofit.create(RoomTypeRequests.class);
 

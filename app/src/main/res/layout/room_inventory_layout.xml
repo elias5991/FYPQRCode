@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include layout="@layout/header_layout"
+        android:id="@+id/header"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".LoginActivity">
+
+
+
+
+        <TextView
+            android:id="@+id/roomNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
+            android:text="Room Name: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/roomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/roomNameLabel"
+            android:layout_alignStart="@id/roomNameLabel"
+            android:layout_marginVertical="40dp"
+            android:layout_below="@id/roomNameLabel"
+            android:text="N/A"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/typeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="99dp"
+            android:layout_alignBottom="@id/roomNameLabel"
+            android:layout_centerHorizontal="true"
+            android:text="Type: "
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/typeLabel"
+            android:layout_alignStart="@id/typeLabel"
+            android:layout_marginVertical="40dp"
+            android:layout_below="@id/typeLabel"
+            android:text="N/A"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/spaceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp"
+            android:layout_alignBottom="@id/roomNameLabel"
+            android:text="Space: "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/spaceLabel"
+            android:layout_alignStart="@id/spaceLabel"
+            android:layout_marginVertical="40dp"
+            android:layout_below="@id/spaceLabel"
+            android:text="N/A"
+            android:textSize="18dp" />
+
+
+
+        <TextView
+            android:id="@+id/departmentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_below="@id/roomName"
+            android:layout_alignStart="@id/roomName"
+            android:layout_alignTop="@id/roomName"
+            android:layout_marginTop="60dp"
+            android:text="Department: "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/departmentLabel"
+            android:layout_alignStart="@id/departmentLabel"
+            android:layout_marginVertical="40dp"
+            android:layout_below="@id/departmentLabel"
+            android:text="N/A"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/facultyLabel"
+            android:layout_below="@id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_alignTop="@+id/type"
+            android:layout_alignStart="@id/type"
+            android:layout_marginVertical="60dp"
+            android:layout_centerHorizontal="true"
+            android:text="Faculty: "
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/faculty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/facultyLabel"
+            android:layout_alignStart="@id/facultyLabel"
+            android:layout_marginVertical="40dp"
+            android:layout_below="@id/facultyLabel"
+            android:text="N/A"
+            android:textSize="18dp" />
+
+        <TableLayout
+            android:id="@id/inventoriesHeaderTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/faculty"
+            android:layout_alignStart="@id/roomNameLabel"
+            android:layout_alignEnd="@id/spaceLabel">
+            <TableRow
+                android:id="@+id/tableName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Inventories"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/headerRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="Inventories"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textStyle="bold"/>
+
+
+
+            </TableRow>
+        </TableLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/inventoriesHeaderTable"
+            android:layout_above="@id/footer"
+            tools:layout_editor_absoluteX="1dp"
+            android:layout_alignStart="@id/roomNameLabel"
+            android:layout_alignEnd="@id/spaceLabel"
+            tools:ignore="MissingConstraints">
+            <TableLayout
+                android:id="@id/inventoriesTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </ScrollView>
+        <include layout="@layout/footer_layout"
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -11,15 +11,15 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface DepartmentRequests {
-    @GET("http://10.0.2.2:80/php/controllers/department-controller.php?f=getAllDepartments")
+    @GET("http://192.168.0.103:80/php/controllers/department-controller.php?f=getAllDepartments")
     Call<DataItem[]> getAllDepartments();
 
-    @POST("http://10.0.2.2:80/php/controllers/department-controller.php?f=insertNewDepartment")
+    @POST("http://192.168.0.103:80/php/controllers/department-controller.php?f=insertNewDepartment")
     Call<SuccessResponse> insertNewDepartment(@Body ValueRequest value);
 
-    @PUT("http://10.0.2.2:80/php/controllers/department-controller.php?f=updateDepartment")
+    @PUT("http://192.168.0.103:80/php/controllers/department-controller.php?f=updateDepartment")
     Call<SuccessResponse> updateDepartment(@Body DataItem DepartmentDataItem);
 
-    @POST("http://10.0.2.2:80/php/controllers/department-controller.php?f=deleteDepartment")
+    @POST("http://192.168.0.103:80/php/controllers/department-controller.php?f=deleteDepartment")
     Call<SuccessResponse> deleteDepartment(@Body DataItem DepartmentDataItem);
 }
